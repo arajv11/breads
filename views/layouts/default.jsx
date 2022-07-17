@@ -11,19 +11,6 @@ function Default(html) {
     </head>
     <body>
       <div className="wrapper">
-      <nav>
-        <ul>
-          <li>
-            <a href="/">Home</a>
-          </li>
-          <li>
-            <a href="/places">Places</a>
-          </li>
-          <li>
-            <a href="/places/new">Add Place</a>
-          </li>
-        </ul>
-      </nav>
         <header>
           <h1><a href="/breads">BreadCRUD</a></h1>
         </header>
