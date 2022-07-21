@@ -28,14 +28,16 @@ function Edit ({bread, bakers}) {
             id="hasGluten"
             defaultChecked={bread.hasGluten}
           />
-          <br />
+          <br/>
           <label htmlFor="baker">Baker</label>
           <select name="baker" id="baker" defaultValue={bread.baker}>
-              {bakers.map((baker) => {
-                  return(
-                      <option value={baker.id} key={baker.id}>{baker.name}</option>
-                  )
-              })}
+            {bakers.map((baker) => {
+              return(
+                  <option value={baker.id} key={baker.id}>
+                    {baker.name}
+                  </option>
+              )
+            })}
           </select>
           <input type="submit"/>
         </form>

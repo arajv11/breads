@@ -3,29 +3,25 @@ const breads = express.Router()
 const Bread = require('../models/bread.js')
 const Baker = require('../models/baker.js')
 
-// Index:
-breads.get('/', (req, res) => {
-  Baker.find()
-    .then(foundBakers => {
-      Bread.find()
-      .then(foundBreads => {
-          res.render('index', {
-              breads: foundBreads,
-              bakers: foundBakers,
-              title: 'Index Page'
-          })
-      })
-    })
+// INDEX
+breads.get('/', async (req, res) => {
+  const foundBakers = await Baker.find().lean()
+  const foundBreads = await Bread.find().limit(2).lean()
+  res.render('index', {
+    breads: foundBreads,
+    bakers: foundBakers,
+    title: 'Index Page'
+  })
 })
 
 // NEW
 breads.get('/new', (req, res) => {
-    Baker.find()
-        .then(foundBakers => {
-            res.render('new', {
-                bakers: foundBakers
-            })
+  Baker.find()
+    .then(foundBakers => {
+      res.render('new', {
+        bakers: foundBakers
       })
+    })
 })
 
 // EDIT
@@ -35,8 +31,8 @@ breads.get('/:id/edit', (req, res) => {
         Bread.findById(req.params.id)
           .then(foundBread => {
             res.render('edit', {
-                bread: foundBread, 
-                bakers: foundBakers 
+              bread: foundBread, 
+              bakers: foundBakers 
             })
           })
     })
@@ -45,17 +41,17 @@ breads.get('/:id/edit', (req, res) => {
 // SHOW
 breads.get('/:id', (req, res) => {
   Bread.findById(req.params.id)
-      .populate('baker')
-      .then(foundBread => {
-        const bakedBy = foundBread.getBakedBy() 
-        console.log(bakedBy)
-        res.render('show', {
-            bread: foundBread
-        })
+    .populate('baker')
+    .then(foundBread => {
+      const bakedBy = foundBread.getBakedBy() 
+      console.log(bakedBy)
+      res.render('show', {
+          bread: foundBread
       })
-      .catch(err => {
-        res.send('404')
-      })
+    })
+    .catch(err => {
+      res.send('404')
+    })
 })
 
 // CREATE
